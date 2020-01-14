@@ -30,4 +30,8 @@ public class Book {
     public boolean isAvailability() {
         return availability;
     }
+
+    public void setAvailability(boolean setAvailable){
+        availability = setAvailable;
+    }
 }
