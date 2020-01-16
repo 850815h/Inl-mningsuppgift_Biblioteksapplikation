@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class BookProgram {
@@ -9,91 +10,112 @@ public class BookProgram {
 
     public BookProgram() {
         addBooks();
-        //System.out.println(searchByTitle("SKriv boktitel!", "Boken finns ej!"));
+        //System.out.println(searchByTitle("SKriv boktitel!", "Boken finns ej!", "Boken är utlånad tyvärr."));
         //System.out.println(searchByAuthor("SKriv boktitel!", "Boken finns ej!"));
         //showAllBookList();
         //showAvailableBookWithRandomInformation(true, false, false, true );
     }
 
+    public Book searchByTitleOrAuthor(String welcomeMessage, String messageIfFail, String ifBookIsNotAvailable) {
+        String tempMessage = messageIfFail;
+        System.out.println(welcomeMessage);
+        do {
+            String userInput = scanner.nextLine();
+            for (Book book : books) {
+                if (book.getTitle().toLowerCase().equals(userInput.toLowerCase()) && book.isAvailability() == true ||
+                        book.getAuthor().toLowerCase().equals(userInput.toLowerCase()) && book.isAvailability() == true) {
+                    book.setAvailability(false);
+                    return book;
+                } else if (book.getTitle().toLowerCase().equals(userInput.toLowerCase()) && book.isAvailability() == false ||
+                        book.getAuthor().toLowerCase().equals(userInput.toLowerCase()) && book.isAvailability() == false) {
+                    messageIfFail = ifBookIsNotAvailable;
+                    break;
+                }
+            }
+            System.out.println(messageIfFail);
+            messageIfFail = tempMessage;
+        } while (true);
+    }
+
     public Book searchByTitle(String welcomeMessage, String messageIfFail, String ifBookIsNotAvailable) {
+        String tempMessage = messageIfFail;
         System.out.println(welcomeMessage);
-        while (true) {
+        do {
             String userInput = scanner.nextLine();
             for (Book book : books) {
-                if (book.getTitle().toLowerCase().contains(userInput.toLowerCase()) && book.isAvailability() == true ) {
-                    book.setAvailability( false );
+                if (book.getTitle().toLowerCase().contains(userInput.toLowerCase()) && book.isAvailability() == true) {
+                    book.setAvailability(false);
                     return book;
-                } else if (book.getTitle().toLowerCase().contains(userInput.toLowerCase()) && book.isAvailability() == false ) {
-                    System.out.println( ifBookIsNotAvailable );
-                    searchByTitle( welcomeMessage, messageIfFail,  ifBookIsNotAvailable);
+                } else if (book.getTitle().toLowerCase().contains(userInput.toLowerCase()) && book.isAvailability() == false) {
+                    messageIfFail = ifBookIsNotAvailable;
+                    break;
                 }
             }
             System.out.println(messageIfFail);
-        }
-
-        /*System.out.println(welcomeMessage);
-        while (true) {
-            String userInput = scanner.nextLine();
-            for (Book book : books) {
-                ArrayList<Book> booksWithSameSearch = new ArrayList<>();
-                if (book.getTitle().toLowerCase().contains(userInput.toLowerCase())) {
-                    booksWithSameSearch.add(book);
-                }
-
-                if (booksWithSameSearch.size() == 1) {
-                    return book;
-                } else {
-                    System.out.println("Vänligen välj en av dessa!");
-                    while (true) {
-                        for (Book b : booksWithSameSearch) {
-                            System.out.println(b.getTitle());
-                            String newSearch = scanner.nextLine();
-                            if (b.getTitle().toLowerCase().contains(newSearch.toLowerCase())) {
-                                return book;
-                            }
-                        }
-                    }
-                }
-            }
-            System.out.println(messageIfFail);
-        }*/
+            messageIfFail = tempMessage;
+        } while (true);
     }
 
-    public Book searchByAuthor(String welcomeMessage, String messageIfFail) {
+    public Book searchByAuthor(String welcomeMessage, String messageIfFail, String ifBookIsNotAvailable) {
+        String tempMessage = messageIfFail;
         System.out.println(welcomeMessage);
-        while (true) {
+        do {
             String userInput = scanner.nextLine();
             for (Book book : books) {
-                if (book.getAuthor().equalsIgnoreCase(userInput)) {
+                if (book.getAuthor().toLowerCase().contains(userInput.toLowerCase()) && book.isAvailability() == true) {
+                    book.setAvailability(false);
                     return book;
+                } else if (book.getAuthor().toLowerCase().contains(userInput.toLowerCase()) && book.isAvailability() == false) {
+                    messageIfFail = ifBookIsNotAvailable;
+                    break;
                 }
             }
             System.out.println(messageIfFail);
-        }
+            messageIfFail = tempMessage;
+        } while (true);
     }
 
-    private void showAllBookList() {
-        for (Book book : books) {
-            System.out.println(showAllBookInformationAndAvailability(book));
+    public void showAvailableOrNotAvailableBook(boolean trueAvailableFalseUnavailableBook, String messageIfThereIsAvailableBook, String messageIfThereIsNoAvailableBook) {
+        int falseBooks = 0;
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).isAvailability() == false) {
+                falseBooks++;
+            }
         }
+
+        if (falseBooks == (books.size() - books.size()) && trueAvailableFalseUnavailableBook == false) {
+            System.out.println(messageIfThereIsAvailableBook);
+        } else if (falseBooks == books.size() && trueAvailableFalseUnavailableBook == true) {
+            System.out.println(messageIfThereIsNoAvailableBook);
+        }
+
+        for (Book book : books) {
+            if (book.isAvailability() == trueAvailableFalseUnavailableBook) {
+                System.out.println(showSimpleInformationOfBook(book));
+            } else if (book.isAvailability() == trueAvailableFalseUnavailableBook) {
+                System.out.println(showSimpleInformationOfBook(book));
+            }
+        }
+
+
     }
 
-    public void showAvailableBookWithRandomInformation(boolean showTitle, boolean showAuthor,
-                                                        boolean showInformation, boolean showAvailability) {
+    public void showAvailableBookWithRandomInformation(boolean breakLineAfterEachMessage,boolean showTitle,boolean showAuthor,boolean showInformation,boolean showAvailability) {
         for (Book book : books) {
-            System.out.printf("%-20s\n", returnAvailableOrNot(showAvailability));
-            System.out.printf("%-20s\n", returnInformationOrNot(book, showInformation));
-            System.out.printf("%-20s\n", returnAuthorOrNot(book, showAuthor));
-            System.out.printf("%-20s\n", returnTitleOrNot(book, showTitle));
-
-        }/*for (Book book : books) {
-            //System.out.println( returnTitleOrNot( book, showTitle)
-            System.out.printf( "%-20s %-20s %-40s %-50s\n",
-                    returnTitleOrNot( book, showTitle),
-                    returnAuthorOrNot( book, showAuthor),
-                    returnInformationOrNot( book, showInformation),
-                    returnAvailableOrNot( showAvailability));
-        }*/
+            if (breakLineAfterEachMessage == true) {
+                System.out.printf("%-18s\n", returnAvailableOrNot(book, showAvailability));
+                System.out.printf("%-35s\n", returnTitleOrNot(book, showTitle));
+                System.out.printf("%-30s\n", returnAuthorOrNot(book, showAuthor));
+                System.out.printf("%-20s\n", returnInformationOrNot(book, showInformation));
+                System.out.println();
+            } else {
+                System.out.printf("%-18s", returnAvailableOrNot(book, showAvailability));
+                System.out.printf("%-35s", returnTitleOrNot(book, showTitle));
+                System.out.printf("%-30s", returnAuthorOrNot(book, showAuthor));
+                System.out.printf("%-20s", returnInformationOrNot(book, showInformation));
+                System.out.println();
+            }
+        }
     }
 
     private String returnTitleOrNot(Book bookToShowInfoOf, boolean showOrNot) {
@@ -117,19 +139,24 @@ public class BookProgram {
         return "";
     }
 
-    private String returnAvailableOrNot(boolean falseOrTrue) {
-        if (falseOrTrue == true) {
-            return "Tillgänglig";
+    private String returnAvailableOrNot(Book book, boolean showOrNot) {
+        if (book.isAvailability() == true) {
+            return "(Tillgänglig)";
         }
-        return "Ej tillgänglig";
+        return "(Ej tillgänglig)";
     }
 
     private String showAllBookInformation(Book book) {
-        return String.format("%-20s %-40s %-50s\n", book.getTitle(), book.getAuthor(), book.getInformation());
+        return String.format("%-15s %-20s %-40s %-50s\n",
+                book.isAvailability(),
+                book.getTitle(),
+                book.getAuthor(),
+                book.getInformation());
     }
 
-    public String showAllBookInformationAndAvailability(Book book) {
-        return String.format("%-20s\nAv: %-40s\n%-50s\n%s\n", book.getTitle(), book.getAuthor(), book.getInformation(), returnAvailableOrNot(book.isAvailability()));
+    public String showSimpleInformationOfBook(Book book) {
+        //return String.format("%-20s\nAv: %-40s\n%-50s\n%s\n", book.getTitle(), book.getAuthor(), book.getInformation(), returnAvailableOrNot(book.isAvailability()));
+        return String.format("%-35s Av: %-40s s%-50s", book.getTitle(), book.getAuthor(), book.getInformation());
 
     }
 
@@ -146,5 +173,23 @@ public class BookProgram {
         books.add(new Book("How to become a code master", "Tobias S", "\"How to use Google and YouTube, to finish your studies.\"", true));
     }
 
+    public ArrayList<Book> getBooks(){
+        return books;
+    }
 
+    public void addBook(Book book) {
+        books.add( book );
+    }
+
+    public void removeBook(Book book) {
+        books.remove( book );
+    }
+
+    public void sortByTitle(){
+        Collections.sort( Program.getBookProgram().getBooks(), new Sort.SortByTitle());
+    }
+
+    public void sortByAuthor(){
+        Collections.sort( Program.getBookProgram().getBooks(), new Sort.SortByAuthor());
+    }
 }

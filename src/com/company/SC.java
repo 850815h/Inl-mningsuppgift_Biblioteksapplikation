@@ -6,28 +6,41 @@ import java.util.Scanner;
 
 public class SC {
     private static Thread thread;
-    private static Scanner scanner = new Scanner(System.in);
+    public static Scanner scanner = new Scanner(System.in);
     private static final int NEW_LINE_LIMIT = 5;
-    private static final int MAX_MESSAGE_FIELD_SPACE = 10;
-    private static final int MAX_BLANK_LEFT_SPACE = 5;
-    private static final int MAX_BLANK_RIGHT_SPACE = 5;
+    private static final int MAX_MESSAGE_FIELD_SPACE = 60;
+    private static final int MAX_BLANK_LEFT_SPACE = 3;
+    private static final int MAX_BLANK_RIGHT_SPACE = 3;
+
+    public static void pressKeyToQuitMenu(String messageWhatToPressToQuitMenu) {
+        SC.messageFieldCenterWithBlankSpace(messageWhatToPressToQuitMenu);
+        try {
+            System.in.read();
+        } catch (Exception e) {
+        }
+    }
+
+    public static String userInput() {
+        String userInput = scanner.nextLine();
+        return userInput;
+    }
 
     public static String breakLineAfterAmountOfWords(String stringToCut) {
         List<String> lines = new ArrayList<>();
         String line = "";
         String[] words = stringToCut.split(" ");
 
-        int rounds = NEW_LINE_LIMIT -1;
-        for( int i = 0 ; i < words.length ; i++ ){
-            if( lines.size() == rounds ){
-                lines.add( words[i]+"\n");
+        int rounds = NEW_LINE_LIMIT - 1;
+        for (int i = 0; i < words.length; i++) {
+            if (lines.size() == rounds) {
+                lines.add(words[i] + "\n");
                 rounds += NEW_LINE_LIMIT;
                 continue;
             }
-            lines.add( words[i]+" ");
+            lines.add(words[i] + " ");
         }
 
-        for ( String s : lines ){
+        for (String s : lines) {
             line += s;
         }
         return line;
@@ -63,25 +76,25 @@ public class SC {
             emptyLeftSpace += blankSpace;
         }
 
-        int rounds = MAX_MESSAGE_FIELD_SPACE -1; //10
+        int rounds = MAX_MESSAGE_FIELD_SPACE - 1; //10
         //lines.add( startAndEndFrame + MAX_BLANK_LEFT_SPACE ); //+ words[i]+startAndEndFrame);
-        for( int i = 0 ; i < words.length ; i++ ) {
+        for (int i = 0; i < words.length; i++) {
 
             if (line.length() == rounds - rounds + words[i].length() + emptyLeftSpace.length() + startAndEndFrame.length()) {
-                    lines.add(words[i] + emptyLeftSpace + startAndEndFrame + "\n");
-                    rounds += NEW_LINE_LIMIT;
-                    continue;
-                }
+                lines.add(words[i] + emptyLeftSpace + startAndEndFrame + "\n");
+                rounds += NEW_LINE_LIMIT;
+                continue;
+            }
 
                 /*if (lines.size() == rounds) {
                     lines.add(words[i] + emptyLeftSpace + startAndEndFrame + "\n");
                     rounds += NEW_LINE_LIMIT;
                     continue;
                 }*/
-                lines.add(words[i] + " ");
-            }
+            lines.add(words[i] + " ");
+        }
 
-        for ( String s : lines ){
+        for (String s : lines) {
             line += s;
         }
 
