@@ -3,23 +3,16 @@ package com.company;
 import java.util.Comparator;
 
 public class Sort {
-    /*
-    static class SortByBookTitle implements Comparator<Product> {
-        public int compare(Product a, Product b){
-            return a.getType().compareTo( b.getType() );
+
+    public static class SortByTitle implements Comparator<Book>{
+        public int compare(Book a, Book b){
+            return b.getTitle().compareTo( a.getTitle());
         }
     }
 
-    static class SortByBookAuthor implements Comparator<Product> {
-        public int compare(Product a, Product b){
-            return a.getName().compareTo( b.getName() );
+    public static class SortByAuthor implements Comparator<Book>{
+        public int compare(Book a, Book b){
+            return a.getAuthor().compareTo( b.getAuthor() );
         }
     }
-
-    static class SortByTime implements Comparator<Product> {
-        public int compare(Product a, Product b){
-            return (int)(a.getPrice() - b.getPrice());
-        }
-    }
-    */
 }
