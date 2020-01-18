@@ -2,26 +2,37 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class BookProgram {
-    private Scanner scanner = new Scanner(System.in);
     private ArrayList<Book> books = new ArrayList<>();
 
     public BookProgram() {
-        addBooks();
+        addBooksFromFile(books, "books.txt");
         //System.out.println(searchByTitle("SKriv boktitel!", "Boken finns ej!", "Boken är utlånad tyvärr."));
         //System.out.println(searchByAuthor("SKriv boktitel!", "Boken finns ej!"));
         //showAllBookList();
         //showAvailableBookWithRandomInformation(true, false, false, true );
     }
 
-    public Book searchByTitleOrAuthor(String welcomeMessage, String messageIfFail, String ifBookIsNotAvailable) {
+    private void addBooksFromFile(ArrayList<Book> listOfBooksToAddBooksTo, String fileName) {
+        List<String> lines = FileUtility.readAllLines(fileName);
+        for (String str : lines) {
+            String[] parts = str.split(",");
+            for (int i = 0; i < str.length(); i++) {
+                listOfBooksToAddBooksTo.add(new Book(parts[0], parts[1], parts[2], true));
+                break;
+            }
+        }
+    }
+
+    public Book searchByTitleOrAuthorAndReturnIfTrue(String welcomeMessage, String messageIfFail, String ifBookIsNotAvailable) {
         String tempMessage = messageIfFail;
         System.out.println(welcomeMessage);
         do {
-            String userInput = scanner.nextLine();
-            for (Book book : books) {
+            String userInput = SC.scanner.nextLine();
+            for (Book book : Program.getBookProgram().getBooks()) {
                 if (book.getTitle().toLowerCase().equals(userInput.toLowerCase()) && book.isAvailability() == true ||
                         book.getAuthor().toLowerCase().equals(userInput.toLowerCase()) && book.isAvailability() == true) {
                     book.setAvailability(false);
@@ -37,11 +48,26 @@ public class BookProgram {
         } while (true);
     }
 
+    public Book searchByTitleOrAuthorAndReturnIfFalse(String welcomeMessage, String messageIfFail) {
+        System.out.println(welcomeMessage);
+        do {
+            String userInput = SC.scanner.nextLine();
+            for (Book book : Program.getBookProgram().getBooks()) {
+                if (book.getTitle().toLowerCase().equals(userInput.toLowerCase()) && book.isAvailability() == false ||
+                        book.getAuthor().toLowerCase().equals(userInput.toLowerCase()) && book.isAvailability() == false) {
+                    book.setAvailability(true);
+                    return book;
+                }
+            }
+            System.out.println(messageIfFail);
+        } while (true);
+    }
+
     public Book searchByTitle(String welcomeMessage, String messageIfFail, String ifBookIsNotAvailable) {
         String tempMessage = messageIfFail;
         System.out.println(welcomeMessage);
         do {
-            String userInput = scanner.nextLine();
+            String userInput = SC.scanner.nextLine();
             for (Book book : books) {
                 if (book.getTitle().toLowerCase().contains(userInput.toLowerCase()) && book.isAvailability() == true) {
                     book.setAvailability(false);
@@ -60,7 +86,7 @@ public class BookProgram {
         String tempMessage = messageIfFail;
         System.out.println(welcomeMessage);
         do {
-            String userInput = scanner.nextLine();
+            String userInput = SC.scanner.nextLine();
             for (Book book : books) {
                 if (book.getAuthor().toLowerCase().contains(userInput.toLowerCase()) && book.isAvailability() == true) {
                     book.setAvailability(false);
@@ -158,19 +184,6 @@ public class BookProgram {
         //return String.format("%-20s\nAv: %-40s\n%-50s\n%s\n", book.getTitle(), book.getAuthor(), book.getInformation(), returnAvailableOrNot(book.isAvailability()));
         return String.format("%-35s Av: %-40s s%-50s", book.getTitle(), book.getAuthor(), book.getInformation());
 
-    }
-
-    private void addBooks() {
-        books.add(new Book("aaa Ondskan", "Jan Guillou", "\"Pojken som behandlas illa av sina klasskamrater.\"", true));
-        books.add(new Book("aaa Tomat, det är ingen grönsak!", "\"Patrik Grönkvist", "\"Tomat går att äta till allt!\"", true));
-        books.add(new Book("Sportbilar Delux", "Hassan A", "\"Om Mercedes Benz och BMW, som tar över världen med storm.\"", true));
-        books.add(new Book("Tysta Johan", "Erik Polako", "\"Erik känner sig otroligt smart jämfört med sina klasskamrater.\"", true));
-        books.add(new Book("Nils och Hundarna", "Lars Isak", "\"Mannen som älskade sina två hundar över allt annat.\"", true));
-        books.add(new Book("Skrattet", "Anna S", "\"Pojken som behandlas illa av sina klasskamrater\"", true));
-        books.add(new Book("Shoo Kurnia", "Kurnia V", "\"Hur ska man hälsa på andra medarbetare på jobbet? Räcker det verkligen med bara ett hej?\"", true));
-        books.add(new Book("Stugans svaga länk", "Christian Andersson", "\"Den dramatiska historien om stugan utan dörr.\"", true));
-        books.add(new Book("Skolan som gick i konkurs", "Humanus YH", "\"Vad hände egentligen med eleverna som studerade OOPAi?.\"", true));
-        books.add(new Book("How to become a code master", "Tobias S", "\"How to use Google and YouTube, to finish your studies.\"", true));
     }
 
     public ArrayList<Book> getBooks(){

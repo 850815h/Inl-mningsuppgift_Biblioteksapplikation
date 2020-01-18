@@ -3,13 +3,13 @@ package com.company;
 import java.util.ArrayList;
 
 public class Customer extends User {
-    private ArrayList<Book> books = new ArrayList<>();
+    //private ArrayList<Book> books = new ArrayList<>();
 
     public Customer(String name, String password) {
         super(name, password);
     }
 
-    public void addBook(Book book){
+    /*public void addBook(Book book){
         books.add( book );
     }
 
@@ -19,5 +19,5 @@ public class Customer extends User {
 
     public ArrayList<Book> getBooks(){
         return books;
-    }
+    }*/
 }

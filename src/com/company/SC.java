@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 public class SC {
     private static Thread thread;
-    public static Scanner scanner = new Scanner(System.in);
+    public transient static Scanner scanner = new Scanner(System.in);
     private static final int NEW_LINE_LIMIT = 5;
-    private static final int MAX_MESSAGE_FIELD_SPACE = 60;
+    private static final int MAX_MESSAGE_FIELD_SPACE = 62;
     private static final int MAX_BLANK_LEFT_SPACE = 3;
     private static final int MAX_BLANK_RIGHT_SPACE = 3;
 
