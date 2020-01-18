@@ -6,21 +6,27 @@ public class CustomerProgram {
     private ArrayList<Book> myBorrowedBooks = new ArrayList<>();
 
     public CustomerProgram() {
+        /*System.out.println( myBorrowedBooks.size());
+        addBookBySearch();
+        System.out.println( myBorrowedBooks.size());*/
     }
 
-    public void showMyBorrowedBooks(String messageIfEmptyList) {
-        if (myBorrowedBooks.size() > 0) {
-            for (Book book : myBorrowedBooks) {
+    public void showMyBorrowedBooks(ArrayList<Book> listOfBooksToShow, String messageIfEmptyList) {
+        if (listOfBooksToShow.size() > 0) {
+            for (Book book : listOfBooksToShow) {
                 System.out.println(Program.getBookProgram().showSimpleInformationOfBook(book));
             }
         } else {
             System.out.println(messageIfEmptyList);
         }
+
     }
 
-    private void addBookBySearch() {
-        //myBorrowedBooks.add(bookProgram.searchByTitleOrAuthor("Vilken bok söker du efter?", "Tyvärr finns inte boken du sökte, försök igen med\nexakt titel eller författare!", "Tyvärr är boken utlånad för tillfället."));
-        myBorrowedBooks.add(Program.getBookProgram().searchByTitleOrAuthor("Vilken bok söker du efter?", "Tyvärr finns inte boken du sökte, försök igen med\nexakt titel eller författare!", "Tyvärr är boken utlånad för tillfället."));
+    public void addBookBySearch(User customerListToAddBookTo) {
+        customerListToAddBookTo.addBook(Program.getBookProgram().searchByTitleOrAuthorAndReturnIfTrue("Vilken bok vill du låna? Sök efter titel eller författare.", "Tyvärr finns inte boken du sökte efter, försök igen med\nexakt titel eller författarnamn!", "Tyvärr är boken utlånad för tillfället."));
+    }
+
+    public void returnBookBySearch(User customerListToAddBookTo) {customerListToAddBookTo.removeBook(Program.getBookProgram().searchByTitleOrAuthorAndReturnIfFalse("Vilken bok vill du lämna tillbaka?", "Tyvärr finns inte boken du försöker lämna tillbaka! Försök igen."));
     }
 
     private void addBookByTitle() {
