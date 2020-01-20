@@ -6,7 +6,7 @@ public class Sort {
 
     public static class SortByTitle implements Comparator<Book>{
         public int compare(Book a, Book b){
-            return b.getTitle().compareTo( a.getTitle());
+            return a.getTitle().compareTo( b.getTitle());
         }
     }
 

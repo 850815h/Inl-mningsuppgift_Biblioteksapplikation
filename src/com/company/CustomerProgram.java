@@ -11,22 +11,12 @@ public class CustomerProgram {
         System.out.println( myBorrowedBooks.size());*/
     }
 
-    public void showMyBorrowedBooks(ArrayList<Book> listOfBooksToShow, String messageIfEmptyList) {
-        if (listOfBooksToShow.size() > 0) {
-            for (Book book : listOfBooksToShow) {
-                System.out.println(Program.getBookProgram().showSimpleInformationOfBook(book));
-            }
-        } else {
-            System.out.println(messageIfEmptyList);
-        }
-
+    public void addBookBySearch(ArrayList<Book> bookListToBorrowFrom, User customerListToAddBookTo) {
+        customerListToAddBookTo.addBook(Program.getBookProgram().searchByTitleOrAuthorAndReturnIfTrue(bookListToBorrowFrom,"Vilken bok vill du låna? Sök efter titel eller författare.", "Tyvärr finns inte boken du sökte efter, försök igen med\nexakt titel eller författarnamn!", "Tyvärr är boken utlånad för tillfället."));
     }
 
-    public void addBookBySearch(User customerListToAddBookTo) {
-        customerListToAddBookTo.addBook(Program.getBookProgram().searchByTitleOrAuthorAndReturnIfTrue("Vilken bok vill du låna? Sök efter titel eller författare.", "Tyvärr finns inte boken du sökte efter, försök igen med\nexakt titel eller författarnamn!", "Tyvärr är boken utlånad för tillfället."));
-    }
-
-    public void returnBookBySearch(User customerListToAddBookTo) {customerListToAddBookTo.removeBook(Program.getBookProgram().searchByTitleOrAuthorAndReturnIfFalse("Vilken bok vill du lämna tillbaka?", "Tyvärr finns inte boken du försöker lämna tillbaka! Försök igen."));
+    public void returnBookBySearch(ArrayList<Book> bookListToRemoveFrom, User customerListToAddBookTo) {
+        customerListToAddBookTo.removeBook(Program.getBookProgram().searchByTitleOrAuthorAndReturnIfFalse(bookListToRemoveFrom,"Vilken bok vill du lämna tillbaka?", "Tyvärr finns inte boken du försöker lämna tillbaka! Försök igen."));
     }
 
     private void addBookByTitle() {
