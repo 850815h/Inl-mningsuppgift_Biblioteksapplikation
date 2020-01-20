@@ -13,7 +13,9 @@ public class SC {
     private static final int MAX_BLANK_RIGHT_SPACE = 3;
 
     public static void pressKeyToQuitMenu(String messageWhatToPressToQuitMenu) {
+        System.out.println();
         SC.messageFieldCenterWithBlankSpace(messageWhatToPressToQuitMenu);
+        System.out.println();
         try {
             System.in.read();
         } catch (Exception e) {
@@ -221,7 +223,7 @@ public class SC {
             }
         }
 
-        String fullString = startAndEndFrame + emptyLeftSpace + messageToShow + emptyRightSpace + startAndEndFrame;
+        String fullString =  startAndEndFrame + emptyLeftSpace + messageToShow + emptyRightSpace + startAndEndFrame;
         System.out.println(fullString);
         //return fullString;
     }
@@ -294,6 +296,107 @@ public class SC {
         String fullString = emptySpace;
         System.out.println(fullString);
         //return fullString;
+    }
+
+    public static void removeOneOfTwoOfSame(ArrayList<Book> bookList) {
+        if (bookList.size() > 0) {
+            for (int i = 0; i < bookList.size(); i++) {
+                for (int j = 0; j < bookList.size(); j++) {
+                    if (i == j) {
+                        continue;
+                    }
+                    if (bookList.get(i) == bookList.get(j)) {
+                        bookList.remove(j);
+                        break;
+                    }
+                }
+            }
+            return;
+        }
+    }
+
+    public static Book returnBooksFromLibrary(ArrayList<Book> listToReturnFrom, String msgWelcome, String msgRefineSearch, String msgIfFail, String msgIfEmptyList) {
+        String tempMsgRefineSearch = msgRefineSearch;
+        String tempMsgIfFail = msgIfFail;
+        ArrayList<Book> sameSearchBooks = new ArrayList<>();
+        String userInput = "";
+        if (listToReturnFrom.size() > 0) {
+            SC.messageFieldCenterWithBlankSpace(msgWelcome);
+
+            do {
+                do {
+                    msgIfFail = tempMsgIfFail;
+                    SC.eraseBookList(sameSearchBooks);
+                    userInput = SC.scanner.nextLine();
+                    for (int i = 0; i < listToReturnFrom.size(); i++) {
+                        if (listToReturnFrom.get(i).getTitle().toLowerCase().contains(userInput.toLowerCase()) ||
+                                listToReturnFrom.get(i).getAuthor().toLowerCase().contains(userInput.toLowerCase())) {
+                            sameSearchBooks.add(listToReturnFrom.get(i));
+                        }
+                    }
+                    if(sameSearchBooks.size()>0){
+                        msgIfFail = tempMsgRefineSearch;
+                        Program.getBookProgram().showAvailableBookListWithRandomInformation(sameSearchBooks, false, true, true, false, false, "Listan är tom tyvärr :(");
+                    }
+                    if (sameSearchBooks.size() == 1) {
+                        if( sameSearchBooks.get(0).isAvailability() == true ){
+                        sameSearchBooks.get(0).setAvailability(false);
+                        } else {
+                            sameSearchBooks.get(0).setAvailability(false);
+                        }
+                        return sameSearchBooks.get(0);
+                    }
+                    SC.messageFieldCenterWithBlankSpace( msgIfFail);
+                } while (true);
+            } while (true);
+        }
+        SC.messageFieldCenterWithBlankSpace(msgIfEmptyList);
+        return null;
+    }
+
+    public static Book advancedSearchInList(ArrayList<Book> bookListToRemoveFrom, String msgWelcome, String msgRefineSearch, String msgIfFail, String msgIfEmptyList) {
+        String tempMsgRefineSearch = msgRefineSearch;
+        String tempMsgIfFail = msgIfFail;
+        ArrayList<Book> sameSearchBooks = new ArrayList<>();
+        String userInput = "";
+        //if(userInput.equals("9")){return;}
+        if (bookListToRemoveFrom.size() > 0) {
+            SC.messageFieldCenterWithBlankSpace(msgWelcome);
+
+            do {
+                do {
+                    msgIfFail = tempMsgIfFail;
+                    SC.eraseBookList(sameSearchBooks);
+                    userInput = SC.scanner.nextLine();
+                    for (int i = 0; i < bookListToRemoveFrom.size(); i++) {
+                        if (bookListToRemoveFrom.get(i).getTitle().toLowerCase().contains(userInput.toLowerCase()) ||
+                                bookListToRemoveFrom.get(i).getAuthor().toLowerCase().contains(userInput.toLowerCase())) {
+                            sameSearchBooks.add(bookListToRemoveFrom.get(i));
+                        }
+                    }
+                    if(sameSearchBooks.size()>0){
+                        msgIfFail = tempMsgRefineSearch;
+                        Program.getBookProgram().showAvailableBookListWithRandomInformation(sameSearchBooks, false, true, true, false, false, "Listan är tom tyvärr :(");
+                    }
+                    if (sameSearchBooks.size() == 1) {
+                        bookListToRemoveFrom.remove(sameSearchBooks.get(0));
+                        return sameSearchBooks.get(0);
+                    }
+                    SC.messageFieldCenterWithBlankSpace( msgIfFail);
+                } while (true);
+            } while (true);
+        }
+        SC.messageFieldCenterWithBlankSpace(msgIfEmptyList);
+        return null;
+    }
+
+    public static void eraseBookList(ArrayList<Book> bookListToEmpty) {
+        if (bookListToEmpty.size() > 0) {
+            do {
+                bookListToEmpty.remove(bookListToEmpty.get(0));
+            } while (bookListToEmpty.size() > 0);
+            return;
+        }
     }
 
     public static void insertNumberBetween(ArrayList<Integer> listToSearchIn, int minNumber, int maxNumber) {
