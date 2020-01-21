@@ -35,18 +35,29 @@ public class LibrarianProgram {
                         }
                     }
                     if (sameSearchUsers.size() > 1) {
+<<<<<<< Updated upstream
                         System.out.println("4");
+=======
+>>>>>>> Stashed changes
                         msgIfFail = tempMsgRefineSearch;
                         showUserNameAndOrBooks(sameSearchUsers, false);
                     }
                     if (sameSearchUsers.size() == 1) {
+<<<<<<< Updated upstream
                         System.out.println("5");
                         SC.messageFieldCenterWithBlankSpace(sameSearchUsers.get(0).getName());
+=======
+                        SC.messageFieldCenterWithBlankSpace(sameSearchUsers.get(0).getName());
+                        SC.messageFieldCenterWithBlankSpace("( ... Blev ditt sökresultat. )");
+>>>>>>> Stashed changes
                         //return sameSearchUsers.get(0);
                         return;
                     }
                     SC.messageFieldCenterWithBlankSpace(msgIfFail);
+<<<<<<< Updated upstream
                     System.out.println("6");
+=======
+>>>>>>> Stashed changes
                 } while (true);
             } while (true);
         }
@@ -55,12 +66,23 @@ public class LibrarianProgram {
     }
 
     public void showUserNameAndOrBooks(ArrayList<User> userList, boolean showUserBooksOrNot) {
+<<<<<<< Updated upstream
+=======
+        SC.messageFieldWholeWithoutBlankSpace();
+>>>>>>> Stashed changes
         if (userList.size() > 0) {
             for (User user : userList) {
                 if (showUserBooksOrNot) {
                     if (user.getBooks().size() > 0) {
+<<<<<<< Updated upstream
                         SC.messageFieldCenterWithBlankSpace(user.getName());
                         Program.getBookProgram().showAvailableBookListWithRandomInformation(user.getBooks(), false, true, true, false, false, "Listan är tom tyvärr :(");
+=======
+                        SC.messageFieldWholeWithoutBlankSpace();
+                        SC.messageFieldCenterWithBlankSpace(user.getName());
+                        Program.getBookProgram().showAvailableBookListWithRandomInformation(user.getBooks(), false, true, true, false, false, "Listan är tom tyvärr :(");
+                        SC.messageFieldWholeWithoutBlankSpace();
+>>>>>>> Stashed changes
                         System.out.println();
                     }
                 } else {

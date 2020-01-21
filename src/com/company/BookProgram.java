@@ -10,10 +10,6 @@ public class BookProgram {
 
     public BookProgram() {
         addBooksFromFile(books, "books.txt");
-        //System.out.println(searchByTitle("SKriv boktitel!", "Boken finns ej!", "Boken är utlånad tyvärr."));
-        //System.out.println(searchByAuthor("SKriv boktitel!", "Boken finns ej!"));
-        //showAllBookList();
-        //showAvailableBookWithRandomInformation(true, false, false, true );
     }
 
     private void addBooksFromFile(ArrayList<Book> listOfBooksToAddBooksTo, String fileName) {
@@ -21,7 +17,7 @@ public class BookProgram {
         for (String str : lines) {
             String[] parts = str.split(",");
             for (int i = 0; i < str.length(); i++) {
-                listOfBooksToAddBooksTo.add(new Book(parts[0], parts[1], parts[2], true));
+                listOfBooksToAddBooksTo.add(new Book(parts[0], parts[1], parts[2], false));
                 break;
             }
         }
@@ -121,10 +117,19 @@ public class BookProgram {
             for (Book book : bookList) {
                 if (book.isAvailability() == trueAvailableFalseUnavailableBook) {
                     //System.out.println(showSimpleInformationOfBook(book));
+<<<<<<< Updated upstream
                     showAllBookInformation(book);
                 } else if (book.isAvailability() == trueAvailableFalseUnavailableBook) {
                     //System.out.println(showSimpleInformationOfBook(book));
                     showAllBookInformation(book);
+=======
+                    //showAllBookInformation(book);
+                    Program.getBookProgram().showAvailableBookListWithRandomInformation(books, false, true, true, true, true, "Listan är tom tyvärr :(");
+                } else if (book.isAvailability() == trueAvailableFalseUnavailableBook) {
+                    //System.out.println(showSimpleInformationOfBook(book));
+                    //showAllBookInformation(book);
+                    Program.getBookProgram().showAvailableBookListWithRandomInformation(books, false, true, true, true, true, "Listan är tom tyvärr :(");
+>>>>>>> Stashed changes
                 }
             }
             return;

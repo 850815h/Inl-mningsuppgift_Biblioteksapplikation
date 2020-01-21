@@ -11,12 +11,31 @@ public class CustomerProgram {
         System.out.println( myBorrowedBooks.size());*/
     }
 
+<<<<<<< Updated upstream
     public void addBookBySearch(ArrayList<Book> bookListToBorrowFrom, User customerListToAddBookTo) {
         customerListToAddBookTo.addBook(Program.getBookProgram().searchByTitleOrAuthorAndReturnIfTrue(bookListToBorrowFrom,"Vilken bok vill du låna? Sök efter titel eller författare.", "Tyvärr finns inte boken du sökte efter, försök igen med\nexakt titel eller författarnamn!", "Tyvärr är boken utlånad för tillfället."));
     }
 
     public void returnBookBySearch(ArrayList<Book> bookListToRemoveFrom, User customerListToAddBookTo) {
         customerListToAddBookTo.removeBook(Program.getBookProgram().searchByTitleOrAuthorAndReturnIfFalse(bookListToRemoveFrom,"Vilken bok vill du lämna tillbaka?", "Tyvärr finns inte boken du försöker lämna tillbaka! Försök igen."));
+=======
+    public void loanBook() {
+        Program.getCurrentUser().addBook( SC.returnBooksFromLibrary( Program.getBookProgram().getBooks(),
+                "Skriv boktitel eller namnet på författaren för att ta bort boken.",
+                "Din sökning gav FLERA resultat, vänligen specifiera din sökning.",
+                "Din sökning gav inget resultat. Vänligen försök igen.",
+                "Listan är tom."));
+        //customerListToAddBookTo.addBook(Program.getBookProgram().searchByTitleOrAuthorAndReturnIfTrue(bookListToBorrowFrom,"Vilken bok vill du låna? Sök efter titel eller författare.", "Tyvärr finns inte boken du sökte efter, försök igen med\nexakt titel eller författarnamn!", "Tyvärr är boken utlånad för tillfället."));
+    }
+
+    public void returnBook(ArrayList<Book> bookListToRemoveFrom, User customerListToAddBookTo) {
+        Program.getCurrentUser().removeBook( SC.returnBooksFromLibrary( Program.getCurrentUser().getBooks(),
+                "Skriv boktitel eller namnet på författaren för att ta bort boken.",
+                "Din sökning gav FLERA resultat, vänligen specifiera din sökning.",
+                "Din sökning gav inget resultat. Vänligen försök igen.",
+                "Listan är tom."));
+        //customerListToAddBookTo.removeBook(Program.getBookProgram().searchByTitleOrAuthorAndReturnIfFalse(bookListToRemoveFrom,"Vilken bok vill du lämna tillbaka?", "Tyvärr finns inte boken du försöker lämna tillbaka! Försök igen."));
+>>>>>>> Stashed changes
     }
 
     private void addBookByTitle() {
