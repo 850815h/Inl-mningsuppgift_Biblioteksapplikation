@@ -340,7 +340,11 @@ public class SC {
                     }
                     if (sameSearchBooks.size() == 1) {
                         if( sameSearchBooks.get(0).isAvailability() == true ){
+<<<<<<< Updated upstream
                         sameSearchBooks.get(0).setAvailability(false);
+=======
+                            sameSearchBooks.get(0).setAvailability(false);
+>>>>>>> Stashed changes
                         } else {
                             sameSearchBooks.get(0).setAvailability(false);
                         }
@@ -354,6 +358,18 @@ public class SC {
         return null;
     }
 
+<<<<<<< Updated upstream
+=======
+    public static void eraseBookList(ArrayList<Book> bookListToEmpty) {
+        if (bookListToEmpty.size() > 0) {
+            do {
+                bookListToEmpty.remove(bookListToEmpty.get(0));
+            } while (bookListToEmpty.size() > 0);
+            return;
+        }
+    }
+
+>>>>>>> Stashed changes
     public static Book advancedSearchInList(ArrayList<Book> bookListToRemoveFrom, String msgWelcome, String msgRefineSearch, String msgIfFail, String msgIfEmptyList) {
         String tempMsgRefineSearch = msgRefineSearch;
         String tempMsgIfFail = msgIfFail;
@@ -366,7 +382,11 @@ public class SC {
             do {
                 do {
                     msgIfFail = tempMsgIfFail;
+<<<<<<< Updated upstream
                     SC.eraseBookList(sameSearchBooks);
+=======
+                    eraseList(sameSearchBooks);
+>>>>>>> Stashed changes
                     userInput = SC.scanner.nextLine();
                     for (int i = 0; i < bookListToRemoveFrom.size(); i++) {
                         if (bookListToRemoveFrom.get(i).getTitle().toLowerCase().contains(userInput.toLowerCase()) ||
@@ -390,7 +410,11 @@ public class SC {
         return null;
     }
 
+<<<<<<< Updated upstream
     public static void eraseBookList(ArrayList<Book> bookListToEmpty) {
+=======
+    public static void eraseList(ArrayList<Book> bookListToEmpty) {
+>>>>>>> Stashed changes
         if (bookListToEmpty.size() > 0) {
             do {
                 bookListToEmpty.remove(bookListToEmpty.get(0));

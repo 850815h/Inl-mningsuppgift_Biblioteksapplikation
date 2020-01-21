@@ -1,7 +1,13 @@
 package com.company;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+<<<<<<< Updated upstream
+=======
+import java.util.Calendar;
+>>>>>>> Stashed changes
 
 public class Program implements Serializable {
     private String lirem = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
@@ -14,12 +20,34 @@ public class Program implements Serializable {
     private static ArrayList<User> customers = new ArrayList<>();
     private static ArrayList<User> librarians = new ArrayList<>();
     //private Customer currentUser = new Customer("", "");
+<<<<<<< Updated upstream
     private User currentUser = null;
     private ArrayList<Book> books = bookProgram.getBooks();
     private ArrayList<Book> borrowedBooks = new ArrayList<>();
 
     public Program() {
         currentUser = new Customer("Tobbe", "123");
+=======
+    private static User currentUser = null;
+    private ArrayList<Book> books = bookProgram.getBooks();
+    private ArrayList<Book> borrowedBooks = new ArrayList<>();
+
+    private final int MAX_ALLOWED_BORROW_DAY = 234;
+    private Integer[] monthDays = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 31, 31};
+    private LocalDate localDate = LocalDate.now();
+    private int thisDay = localDate.getDayOfMonth();
+    private int thisMonth = localDate.getMonthValue();
+    private int thisYear = localDate.getYear();
+    private int returnDay = localDate.getDayOfMonth();
+    private int returnMonth = localDate.getMonthValue();
+    private int returnYear = localDate.getYear();
+
+    //private LocalDate dateToReturnBook = LocalDate.of( localDate.getYear(), localDate.getMonthValue()+1, localDate.getDayOfMonth());
+
+
+    public Program() {
+        /*currentUser = new Customer("Tobbe", "123");
+>>>>>>> Stashed changes
         currentUser.addBook( new Book("Sagans torn", "Ang Jin", "Blabla", true ));
         currentUser.addBook( new Book("Stugan", "Cameron A", "Blabla", true ));
         currentUser.addBook( new Book("Stars", "Abbe FFADF", "Blabla", true ));
@@ -44,19 +72,152 @@ public class Program implements Serializable {
         customers.get(6).addBook( new Book("Stars", "Abbe FFADF", "Blabla", true ));
         customers.get(8).addBook( new Book("Youtube", "Abbe FAD", "Blabla", true ));
         customers.get(8).addBook( new Book("Halå", "Abbe AF", "Blabla", true ));
+<<<<<<< Updated upstream
         customers.get(8).addBook( new Book("SHej", "Abbe AF", "Blabla", true ));
 
 
         //menuLogIn();
         menuCustomer();
         //menuLibrarian();
+=======
+        customers.get(8).addBook( new Book("SHej", "Abbe AF", "Blabla", true ));*/
+
+        //menuLogIn();
+        //menuCustomer();
+        //menuLibrarian();
+
+        //fileLoadFiles();
+        //menuLibrarian();
+
+        int restDay = 0;
+        int remainDay = 0;
+        int totalDay = thisDay + MAX_ALLOWED_BORROW_DAY;
+        int rounds = 0;
+        int currentDaysOfMonth = monthDays[thisMonth - 1];
+
+        int timetime = 200;
+        int time = thisDay + 200;
+        int next = 0;
+
+        while (time >= 0) {
+            int i = 1;
+            time -= 1;
+            next++;
+            if (next == monthDays[i-1]) {
+                //returnDay = next;
+                i++;
+                next = 0;
+                returnMonth++;
+                if (returnMonth > monthDays.length) {
+                    returnYear++;
+                }
+            }
+            if( time == 0 ){
+                returnDay = next;
+            }
+        }
+
+
+        System.out.println(returnDay);
+        System.out.println(returnMonth);
+        System.out.println(returnYear);
+
+
+
+
+>>>>>>> Stashed changes
 
         //fileLoadFiles();
         //menuLibrarian();
     }
 
+<<<<<<< Updated upstream
     ////////////////////////////////////////////////////////////////
 
+=======
+    private void triggerAmountOfDays(){
+
+    }
+
+    ////////////////////////////////////////////////////////////////
+
+    private void aaa(){
+        String lastDayToReturnBook = "2020-01-01";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 14);
+        lastDayToReturnBook = sdf.format(calendar.getTime());
+
+        customers.add( new Customer("Tobbe", "1234"));
+        customers.add( new Customer("Viktor", "1234"));
+        customers.add( new Customer("Johan", "1234"));
+
+
+        System.out.println( customers.get(0).getBorrowDay());
+        System.out.println(localDate);
+        System.out.println(lastDayToReturnBook);
+
+        if( localDate.getDayOfMonth() == Integer.parseInt( lastDayToReturnBook )){
+            System.out.println("Samma dag");
+        } else if( localDate.getDayOfMonth() <= Integer.parseInt( lastDayToReturnBook )){
+            System.out.println("Du har " + lastDayToReturnBook + " dagar kvar");
+        } else {
+            System.out.println("Du är sen med att lämna boken! " + lastDayToReturnBook + " dagar sen");
+        }
+    }
+
+    private void calan(){
+        String lastDayToReturnBook = "2020-01-01";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 0);
+        lastDayToReturnBook = sdf.format(calendar.getTime());
+
+        /*String dt = "2008-01-01";  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, 370);  // number of days to add
+        dt = sdf.format(c.getTime());  // dt is now the new date*/
+    }
+
+
+
+    private void myCalandar(){
+        int restDay = 0;
+        int remainDay = 0;
+        int totalDay = thisDay + MAX_ALLOWED_BORROW_DAY;
+        int rounds = 0;
+        int currentDaysOfMonth = monthDays[thisMonth - 1];
+
+        int time = thisDay + MAX_ALLOWED_BORROW_DAY;
+        int next = 0;
+
+        while (time > 0) {
+            int i = 0;
+            next++;
+            time -= 1;
+            if (next >= monthDays[thisMonth - i]) {
+                returnDay = time;
+                i++;
+                next = 0;
+                returnMonth++;
+                if (returnMonth > monthDays.length) {
+                    returnYear++;
+                }
+            }
+        }
+        Calendar c = Calendar.getInstance();
+        c.add( Calendar.DATE, 370);  // number of days to add
+
+
+        System.out.println(returnDay);
+        System.out.println(returnMonth);
+        System.out.println(c.getTime());
+    }
+
+    ////////////////////////////////////////////////////////////////
+
+>>>>>>> Stashed changes
     private void fileLoadSavedObject(String userName) {
         /*FileUtility.loadObject(userName + "_user.ser");
         FileUtility.loadObject("libraryProgram.ser");*/
@@ -211,9 +372,15 @@ public class Program implements Serializable {
     }
 
     ////////////////////////////////////////////////////////////////
+<<<<<<< Updated upstream
 
     private void menuLogIn() {
 
+=======
+
+    private void menuLogIn() {
+
+>>>>>>> Stashed changes
         SC.messageFieldCenterWithoutBlankSpace("V Ä L K O M M E N");
         SC.messageFieldLeftWithBlankSpace("");
         SC.messageFieldCenterWithBlankSpace("         .--.   .--.");
@@ -282,6 +449,10 @@ public class Program implements Serializable {
         SC.messageFieldLeftWithBlankSpace("[5] Lämna tillbaka lånad bok");
         SC.messageFieldLeftWithBlankSpace("[6] Visa listan sorterad efter titel");
         SC.messageFieldLeftWithBlankSpace("[7] Visa listan sorterad efter författare");
+<<<<<<< Updated upstream
+=======
+        SC.messageFieldLeftWithBlankSpace("");
+>>>>>>> Stashed changes
         SC.messageFieldLeftWithBlankSpace("[9] Logga ut");
         SC.messageFieldLeftWithBlankSpace("[0] Avsluta applikation");
         SC.messageFieldLeftWithBlankSpace("");
@@ -298,7 +469,11 @@ public class Program implements Serializable {
                     bookProgram.showAvailableOrNotAvailableBook(books, true,
                             "Fins det några snälla böcker kvar?",
                             "Dessa böcker är tillgängliga att låna.",
+<<<<<<< Updated upstream
                            "Nej vad tråkigt... Alla böcker är utlånade tyvärr :´(");
+=======
+                            "Nej vad tråkigt... Alla böcker är utlånade tyvärr :´(");
+>>>>>>> Stashed changes
                     SC.pressKeyToQuitMenu(SC.messageFieldCenterWithBlankSpaceReturn("Tryck på [ ENTER ] för att återvända."));
                     menuCustomer();
                     break;
@@ -308,17 +483,27 @@ public class Program implements Serializable {
                     menuCustomer();
                     break;
                 case "4":
+<<<<<<< Updated upstream
                     bookProgram.showAvailableOrNotAvailableBook(books, true,
                             "Fins det några snälla böcker kvar?",
                             "Dessa böcker är tillgängliga att låna.",
                             "Nej vad tråkigt... Alla böcker är utlånade tyvärr :´(");
                     customerProgram.addBookBySearch(books, currentUser);
+=======
+                    bookProgram.showAvailableBookListWithRandomInformation(currentUser.getBooks(), false, true, true, true, false, "Du har har inte lånat något... än ;)");
+                    customerProgram.loanBook();
+>>>>>>> Stashed changes
                     SC.pressKeyToQuitMenu(SC.messageFieldCenterWithBlankSpaceReturn("Boken är tillagd! Tryck på [ ENTER ] för att återvända."));
                     menuCustomer();
                     break;
                 case "5":
+<<<<<<< Updated upstream
                     bookProgram.showBooksList(currentUser.getBooks(), SC.messageFieldCenterWithBlankSpaceReturn("Din lista är tom. Du har inga lånade böcker."));
                     customerProgram.returnBookBySearch(currentUser.getBooks(), currentUser);
+=======
+                    bookProgram.showBooksList(currentUser.getBooks(), "Din lista är tom. Du har inga lånade böcker.");
+                    customerProgram.returnBook(currentUser.getBooks(), currentUser);
+>>>>>>> Stashed changes
                     SC.pressKeyToQuitMenu(SC.messageFieldCenterWithBlankSpaceReturn("Boken är tillbaka lämnad. Tryck på [ ENTER ] för att återvända."));
                     menuCustomer();
                     break;
@@ -330,7 +515,11 @@ public class Program implements Serializable {
                     break;
                 case "7":
                     bookProgram.sortByAuthor(books);
+<<<<<<< Updated upstream
                     bookProgram.showBooksList(currentUser.getBooks(), SC.messageFieldCenterWithBlankSpaceReturn("Din lista är tom. Du har inga lånade böcker."));
+=======
+                    bookProgram.showAvailableBookListWithRandomInformation(books, false, true, true, true, false, "Listan är tom tyvärr :(");
+>>>>>>> Stashed changes
                     SC.pressKeyToQuitMenu(SC.messageFieldCenterWithBlankSpaceReturn("Tryck på [ ENTER ] för att återvända."));
                     menuCustomer();
                     break;
@@ -385,19 +574,33 @@ public class Program implements Serializable {
                     menuLibrarian();
                     break;
                 case "2":
+<<<<<<< Updated upstream
                     bookProgram.showAvailableOrNotAvailableBook(books, true, "Här kan du se vad vi har som inte är utlånat... än i alla fall :)",
                             SC.messageFieldCenterWithBlankSpaceReturn("Dessa böcker är tillgängliga att låna."),
                             SC.messageFieldCenterWithBlankSpaceReturn("Listan är tom. Det finns inget att visa."));
+=======
+                    bookProgram.showAvailableOrNotAvailableBook(books, true,
+                            "Lista av tillgänliga / utlånade böcker.",
+                            "Dessa böcker är tillgängliga att låna.",
+                            "Listan är tom. Det finns inget att visa.");
+>>>>>>> Stashed changes
                     SC.pressKeyToQuitMenu(SC.messageFieldCenterWithBlankSpaceReturn("Tryck på [ ENTER ] för att återvända."));
                     menuLibrarian();
                     break;
                 case "3":
+<<<<<<< Updated upstream
                     bookProgram.showAvailableOrNotAvailableBook(currentUser.getBooks(), false, "Här kan du se vad vi har som inte är utlånat... än i alla fall :)",
                             SC.messageFieldCenterWithBlankSpaceReturn("Alla böcker är utlånade."),
                             SC.messageFieldCenterWithBlankSpaceReturn("Listan är tom. Det finns inget att visa."));
                     /*bookProgram.showAvailableOrNotAvailableBook(books,false,"Här kan du se vad vi har som inte är utlånat... än i alla fall :)",
                             SC.messageFieldCenterWithBlankSpaceReturn("Alla böcker är utlånade."),
                             SC.messageFieldCenterWithBlankSpaceReturn("Listan är tom. Det finns inget att visa."));*/
+=======
+                    bookProgram.showAvailableOrNotAvailableBook(books, false,
+                            "Lista av tillgänliga / utlånade böcker.",
+                            "Dessa böcker är tillgängliga att låna.",
+                            "Listan är tom. Det finns inget att visa.");
+>>>>>>> Stashed changes
                     SC.pressKeyToQuitMenu(SC.messageFieldCenterWithBlankSpaceReturn("Tryck på [ ENTER ] för att återvända."));
                     menuLibrarian();
                     break;
@@ -419,7 +622,11 @@ public class Program implements Serializable {
                     menuLibrarian();
                     break;
                 case "6":
+<<<<<<< Updated upstream
                     librarianProgram.showUserNameAndOrBooks(customers,false);
+=======
+                    librarianProgram.showUserNameAndOrBooks(customers, false);
+>>>>>>> Stashed changes
                     SC.pressKeyToQuitMenu(SC.messageFieldCenterWithBlankSpaceReturn("Tryck på [ ENTER ] för att återvända."));
                     menuLibrarian();
                     break;
@@ -429,13 +636,23 @@ public class Program implements Serializable {
                     menuLibrarian();
                     break;
                 case "8":
+<<<<<<< Updated upstream
                     librarianProgram.showUserByName(customers,"Välkommen","Din sökning gav flera resultat", "Den du sökte efter finns inte.","Listan är tom");
                     menuLibrarian();
                     break;
                 case "9":
+=======
+                    librarianProgram.showUserByName(customers, "Välkommen", "Din sökning gav flera resultat", "Den du sökte efter finns inte.", "Listan är tom");
+                    SC.pressKeyToQuitMenu(SC.messageFieldCenterWithBlankSpaceReturn("Tryck på [ ENTER ] för att återvända."));
+                    menuLibrarian();
+                    break;
+                case "9":
+                    fileSaveFiles();
+>>>>>>> Stashed changes
                     menuLogIn();
                     break;
                 case "0":
+                    fileSaveFiles();
                     SC.exitProgram();
                     break;
                 default:
@@ -462,6 +679,10 @@ public class Program implements Serializable {
 
     public static UserProgram getUserProgram() {
         return userProgram;
+    }
+
+    public static User getCurrentUser() {
+        return currentUser;
     }
 
     /*public static ArrayList<Customer> getCustomers() {

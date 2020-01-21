@@ -7,6 +7,7 @@ public abstract class User implements Serializable {
     private String name;
     private String password;
     private ArrayList<Book> books = new ArrayList<>();
+    private int borrowDay;
 
     public User(String name, String password) {
         this.name = name;
@@ -31,5 +32,9 @@ public abstract class User implements Serializable {
 
     public ArrayList<Book> getBooks(){
         return books;
+    }
+
+    public int getBorrowDay(){
+        return borrowDay;
     }
 }
