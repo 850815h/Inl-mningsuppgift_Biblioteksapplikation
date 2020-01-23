@@ -1,5 +1,7 @@
 package com.company;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,19 +11,55 @@ public class BookProgram {
     private ArrayList<Book> books = new ArrayList<>();
 
     public BookProgram() {
-        addBooksFromFile(books, "books.txt");
+        //addBooksFromFile(books, "books.txt");
     }
+
+    ////////////////////////////////////////////////////////////////
+
+    public LocalDate setDateToBorrowBook(int amountOfDaysToBorrowBook) {
+        LocalDate returnDate = SC.localDate.plusDays(amountOfDaysToBorrowBook);
+        return returnDate;
+    }
+
+    public void notificationMsgForBorrowDays(ArrayList<Book> bookList) {
+        if (bookList.size() > 0) {
+            for (Book book : bookList) {
+                if (SC.amountOfBorrowDaysCounter(book) >= 7) {
+                    SC.messageFieldWholeWithoutBlankSpace();
+                    SC.messageFieldCenterWithBlankSpace("Du har " + SC.amountOfBorrowDaysCounter(book) + " dagar kvar att lämna tillbaka ");
+                    SC.messageFieldCenterWithBlankSpace("\"" + book.getTitle() + "\"");
+                    SC.messageFieldWholeWithoutBlankSpace();
+                } else if (SC.amountOfBorrowDaysCounter(book) <= 6 && SC.amountOfBorrowDaysCounter(book) >= 1) {
+                    SC.messageFieldWholeWithoutBlankSpace();
+                    SC.messageFieldCenterWithBlankSpace("Notera att du har mindre än en vecka (" + SC.amountOfBorrowDaysCounter(book) + " dagar) kvar");
+                    SC.messageFieldCenterWithBlankSpace("att lämna tillbaka \"" + book.getTitle() + "\"");
+                    SC.messageFieldWholeWithoutBlankSpace();
+                } else if (SC.amountOfBorrowDaysCounter(book) == 0) {
+                    SC.messageFieldWholeWithoutBlankSpace();
+                    SC.messageFieldCenterWithBlankSpace("Du har inte lämnat in \"" + book.getTitle() + "\" i tid");
+                    SC.messageFieldCenterWithBlankSpace("och blir därför tvungen att betala en avgift på 19,999kr!");
+                    SC.messageFieldCenterWithBlankSpace("Betalar du inte in boten i tid, anmäls du vidare till");
+                    SC.messageFieldCenterWithBlankSpace("Inkasso och Kronofogden. Länge leve Kungen!");
+                    SC.messageFieldWholeWithoutBlankSpace();
+                }
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////
 
     private void addBooksFromFile(ArrayList<Book> listOfBooksToAddBooksTo, String fileName) {
         List<String> lines = FileUtility.readAllLines(fileName);
         for (String str : lines) {
             String[] parts = str.split(",");
             for (int i = 0; i < str.length(); i++) {
-                listOfBooksToAddBooksTo.add(new Book(parts[0], parts[1], parts[2], false));
+                listOfBooksToAddBooksTo.add(new Book(parts[0], parts[1], parts[2], true));
                 break;
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////
 
     public Book searchByTitleOrAuthorAndReturnIfTrue(ArrayList<Book> bookList, String welcomeMessage, String messageIfFail, String ifBookIsNotAvailable) {
         String tempMessage = messageIfFail;
@@ -98,38 +136,75 @@ public class BookProgram {
         } while (true);
     }
 
+    ////////////////////////////////////////////////////////////////
+
+    public void showOnlyAvailableBooks(ArrayList<Book> bookList, boolean trueAvailableFalseUnavailableBook, String msgWelcome, String messageIfThereIsAvailableBook, String messageIfThereIsNoAvailableBook) {
+        if (bookList.size() > 0) {
+            SC.messageFieldCenterWithBlankSpace(msgWelcome);
+            for (Book book : bookList) {
+                if (book.isAvailability() == trueAvailableFalseUnavailableBook) {
+                    //System.out.println(showSimpleInformationOfBook(book));
+                    //showAllBookInformation(book);
+                    showAvailableBookWithRandomInformation(book,false,true,true,true,false);
+                } /*else {
+                    //System.out.println(showSimpleInformationOfBook(book));
+                    //showAllBookInformation(book);
+                    showAvailableBookWithRandomInformation(book,false,true,true,true,true);
+                }*/
+            }
+        }
+    }
+
+    public void showOnlyUnavailableBooks(ArrayList<Book> bookList, boolean trueAvailableFalseUnavailableBook, String msgWelcome, String messageIfThereIsAvailableBook, String messageIfThereIsNoAvailableBook) {
+        if (bookList.size() > 0) {
+            SC.messageFieldCenterWithBlankSpace(msgWelcome);
+            for (Book book : bookList) {
+                if (book.isAvailability() == trueAvailableFalseUnavailableBook) {
+                    //System.out.println(showSimpleInformationOfBook(book));
+                    //showAllBookInformation(book);
+                    showAvailableBookWithRandomInformation(book,false,true,true,true,false);
+                } /*else {
+                    //System.out.println(showSimpleInformationOfBook(book));
+                    //showAllBookInformation(book);
+                    showAvailableBookWithRandomInformation(book,false,true,true,true,true);
+                }*/
+            }
+        }
+    }
+
     public void showAvailableOrNotAvailableBook(ArrayList<Book> bookList, boolean trueAvailableFalseUnavailableBook, String msgWelcome, String messageIfThereIsAvailableBook, String messageIfThereIsNoAvailableBook) {
         if (bookList.size() > 0) {
+            System.out.println();
             SC.messageFieldCenterWithBlankSpace(msgWelcome);
             int falseBooks = 0;
             for (int i = 0; i < bookList.size(); i++) {
                 if (bookList.get(i).isAvailability() == false) {
+                    System.out.println("1");
                     falseBooks++;
                 }
             }
 
             if (falseBooks == (bookList.size() - bookList.size()) && trueAvailableFalseUnavailableBook == false) {
+                System.out.println("2");
                 SC.messageFieldCenterWithBlankSpace(messageIfThereIsNoAvailableBook);
             } else if (falseBooks == bookList.size() && trueAvailableFalseUnavailableBook == true) {
+                System.out.println("3");
                 SC.messageFieldCenterWithBlankSpace(messageIfThereIsNoAvailableBook);
             }
 
             for (Book book : bookList) {
                 if (book.isAvailability() == trueAvailableFalseUnavailableBook) {
-                    //System.out.println(showSimpleInformationOfBook(book));
-<<<<<<< Updated upstream
-                    showAllBookInformation(book);
-                } else if (book.isAvailability() == trueAvailableFalseUnavailableBook) {
-                    //System.out.println(showSimpleInformationOfBook(book));
-                    showAllBookInformation(book);
-=======
-                    //showAllBookInformation(book);
-                    Program.getBookProgram().showAvailableBookListWithRandomInformation(books, false, true, true, true, true, "Listan är tom tyvärr :(");
-                } else if (book.isAvailability() == trueAvailableFalseUnavailableBook) {
+                    System.out.println("4");
                     //System.out.println(showSimpleInformationOfBook(book));
                     //showAllBookInformation(book);
-                    Program.getBookProgram().showAvailableBookListWithRandomInformation(books, false, true, true, true, true, "Listan är tom tyvärr :(");
->>>>>>> Stashed changes
+                    //showAvailableBookListWithRandomInformation(books, false, true, true, true, true, "Listan är tom tyvärr :(");
+                    break;
+                } else if (book.isAvailability() == trueAvailableFalseUnavailableBook) {
+                    System.out.println("5");
+                    //System.out.println(showSimpleInformationOfBook(book));
+                    //showAllBookInformation(book);
+                    showAvailableBookListWithRandomInformation(books, false, true, true, true, true, "Listan är tom tyvärr :(");
+                    break;
                 }
             }
             return;
@@ -229,6 +304,18 @@ public class BookProgram {
         return String.format("");
     }
 
+    ////////////////////////////////////////////////////////////////
+
+    public void sortByTitle(ArrayList<Book> bookListToSort) {
+        Collections.sort(bookListToSort, new Sort.SortByTitle());
+    }
+
+    public void sortByAuthor(ArrayList<Book> bookListToSort) {
+        Collections.sort(bookListToSort, new Sort.SortByAuthor());
+    }
+
+    ////////////////////////////////////////////////////////////////
+
     public ArrayList<Book> getBooks() {
         return books;
     }
@@ -237,11 +324,4 @@ public class BookProgram {
         books.add(book);
     }
 
-    public void sortByTitle( ArrayList<Book> bookListToSort) {
-        Collections.sort(bookListToSort, new Sort.SortByTitle());
-    }
-
-    public void sortByAuthor(ArrayList<Book> bookListToSort) {
-        Collections.sort(bookListToSort, new Sort.SortByAuthor());
-    }
 }

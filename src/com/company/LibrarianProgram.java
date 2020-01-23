@@ -11,7 +11,7 @@ public class LibrarianProgram {
     public void removeBook(ArrayList<Book> bookListToRemoveBookFrom) {
         bookListToRemoveBookFrom.remove(SC.returnBooksFromLibrary(bookListToRemoveBookFrom,
                 "Skriv boktitel eller namnet på författaren för att ta bort boken.",
-                "Din sökning gav FLERA resultat, vänligen specifiera din sökning.",
+                "Din sökning gav FLERA resultat, vänligen specificera din sökning.",
                 "Din sökning gav inget resultat. Vänligen försök igen.",
                 "Listan är tom."));
     }
@@ -35,29 +35,16 @@ public class LibrarianProgram {
                         }
                     }
                     if (sameSearchUsers.size() > 1) {
-<<<<<<< Updated upstream
-                        System.out.println("4");
-=======
->>>>>>> Stashed changes
                         msgIfFail = tempMsgRefineSearch;
                         showUserNameAndOrBooks(sameSearchUsers, false);
                     }
                     if (sameSearchUsers.size() == 1) {
-<<<<<<< Updated upstream
-                        System.out.println("5");
-                        SC.messageFieldCenterWithBlankSpace(sameSearchUsers.get(0).getName());
-=======
                         SC.messageFieldCenterWithBlankSpace(sameSearchUsers.get(0).getName());
                         SC.messageFieldCenterWithBlankSpace("( ... Blev ditt sökresultat. )");
->>>>>>> Stashed changes
                         //return sameSearchUsers.get(0);
                         return;
                     }
                     SC.messageFieldCenterWithBlankSpace(msgIfFail);
-<<<<<<< Updated upstream
-                    System.out.println("6");
-=======
->>>>>>> Stashed changes
                 } while (true);
             } while (true);
         }
@@ -66,27 +53,22 @@ public class LibrarianProgram {
     }
 
     public void showUserNameAndOrBooks(ArrayList<User> userList, boolean showUserBooksOrNot) {
-<<<<<<< Updated upstream
-=======
         SC.messageFieldWholeWithoutBlankSpace();
->>>>>>> Stashed changes
         if (userList.size() > 0) {
             for (User user : userList) {
-                if (showUserBooksOrNot) {
-                    if (user.getBooks().size() > 0) {
-<<<<<<< Updated upstream
+                if (user instanceof Customer) {
+                    if (showUserBooksOrNot) {
+                        if (user.getBooks().size() > 0) {
+                            SC.messageFieldWholeWithoutBlankSpace();
+                            System.out.println();
+                            SC.messageFieldCenterWithBlankSpace(user.getName());
+                            Program.getBookProgram().showAvailableBookListWithRandomInformation(user.getBooks(), false, true, true, false, false, "Listan är tom tyvärr :(");
+                            System.out.println();
+                            SC.messageFieldWholeWithoutBlankSpace();
+                        }
+                    } else {
                         SC.messageFieldCenterWithBlankSpace(user.getName());
-                        Program.getBookProgram().showAvailableBookListWithRandomInformation(user.getBooks(), false, true, true, false, false, "Listan är tom tyvärr :(");
-=======
-                        SC.messageFieldWholeWithoutBlankSpace();
-                        SC.messageFieldCenterWithBlankSpace(user.getName());
-                        Program.getBookProgram().showAvailableBookListWithRandomInformation(user.getBooks(), false, true, true, false, false, "Listan är tom tyvärr :(");
-                        SC.messageFieldWholeWithoutBlankSpace();
->>>>>>> Stashed changes
-                        System.out.println();
                     }
-                } else {
-                    SC.messageFieldCenterWithBlankSpace(user.getName());
                 }
             }
             return;
@@ -155,7 +137,8 @@ public class LibrarianProgram {
                 System.out.println(messageInformationInput);
                 informationInput = SC.scanner.nextLine();
             } while (informationInput.isBlank());
-            bookListToAddTo.add(new Book(titleInput, authorInput, informationInput, true));
+            //bookListToAddTo.add(new Book(titleInput, authorInput, informationInput, true));
+            Program.addBook( new Book(titleInput, authorInput, informationInput, true));
             return;
         } while (true);
     }
