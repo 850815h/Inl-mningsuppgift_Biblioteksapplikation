@@ -1,5 +1,7 @@
 package com.company;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -7,14 +9,25 @@ import java.util.Scanner;
 public class SC {
     private static Thread thread;
     public transient static Scanner scanner = new Scanner(System.in);
+    public static LocalDate localDate = LocalDate.now();
     private static final int NEW_LINE_LIMIT = 5;
-    private static final int MAX_MESSAGE_FIELD_SPACE = 62;
+    private static final int MAX_MESSAGE_FIELD_SPACE = 70;
     private static final int MAX_BLANK_LEFT_SPACE = 3;
     private static final int MAX_BLANK_RIGHT_SPACE = 3;
 
-    public static void pressKeyToQuitMenu(String messageWhatToPressToQuitMenu) {
+    public static void msgWelcomeSquare(String messageWhatToPressToQuitMenu) {
         System.out.println();
-        SC.messageFieldCenterWithBlankSpace(messageWhatToPressToQuitMenu);
+        messageFieldWholeWithoutBlankSpace();
+        messageFieldCenterWithBlankSpace(messageWhatToPressToQuitMenu);
+        messageFieldWholeWithoutBlankSpace();
+        System.out.println();
+    }
+
+    public static void msgPressAnyKeyToQuit(String messageWhatToPressToQuitMenu) {
+        System.out.println();
+        messageFieldWholeWithoutBlankSpace();
+        messageFieldCenterWithBlankSpace(messageWhatToPressToQuitMenu);
+        messageFieldWholeWithoutBlankSpace();
         System.out.println();
         try {
             System.in.read();
@@ -315,6 +328,49 @@ public class SC {
         }
     }
 
+    public static void notificationMsgForBorrowDays(ArrayList<Book> bookList) {
+        if (bookList.size() > 0) {
+            messageFieldWholeWithoutBlankSpace();
+            System.out.println();
+            for (Book book : bookList) {
+                if (SC.amountOfBorrowDaysCounter(book) >= 7) {
+                    SC.messageFieldCenterWithBlankSpace("Du har " + SC.amountOfBorrowDaysCounter(book) + " dagar kvar att lämna tillbaka ");
+                    SC.messageFieldCenterWithBlankSpace("\"" + book.getTitle() + "\"");
+                    System.out.println();
+                } else if (SC.amountOfBorrowDaysCounter(book) <= 6 && SC.amountOfBorrowDaysCounter(book) >= 1) {
+                    SC.messageFieldCenterWithBlankSpace("Notera att du har mindre än en vecka (" + SC.amountOfBorrowDaysCounter(book) + " dagar) kvar");
+                    SC.messageFieldCenterWithBlankSpace("att lämna tillbaka \"" + book.getTitle() + "\"");
+                    System.out.println();
+                } else if (SC.amountOfBorrowDaysCounter(book) == 0) {
+                    SC.messageFieldCenterWithBlankSpace("Du har inte lämnat in \"" + book.getTitle() + "\" i tid");
+                    SC.messageFieldCenterWithBlankSpace("och blir därför skyldig att betala en avgift på 19,999kr!");
+                    SC.messageFieldCenterWithBlankSpace("Betalar du inte in boten i tid, anmäls du vidare till");
+                    SC.messageFieldCenterWithBlankSpace("Inkasso och Kronofogden. Länge leve Kungen!");
+                    System.out.println();
+                }
+            }
+            messageFieldWholeWithoutBlankSpace();
+        }
+    }
+
+    public static void notificationMsgForNotReturnedBookInTime(ArrayList<Book> bookList) {
+        if (bookList.size() > 0) {
+            for (Book book : bookList) {
+                if (SC.amountOfBorrowDaysCounter(book) == 0) {
+                    SC.messageFieldCenterWithBlankSpace("Du har inte lämnat in \"" + book.getTitle() + "\" i tid!");
+                    SC.messageFieldCenterWithBlankSpace("Lämna tillbaka boken snarast möjligt för att slippa");
+                    SC.messageFieldCenterWithBlankSpace("onödiga påminnelseavgifter och betalningsanmärkning");
+                    System.out.println();
+                }
+            }
+        }
+    }
+
+    public static long amountOfBorrowDaysCounter(Book book) {
+        long differenceBetweenTwoDates = ChronoUnit.DAYS.between(localDate, book.getReturnDate());
+        return differenceBetweenTwoDates;
+    }
+
     public static Book returnBooksFromLibrary(ArrayList<Book> listToReturnFrom, String msgWelcome, String msgRefineSearch, String msgIfFail, String msgIfEmptyList) {
         String tempMsgRefineSearch = msgRefineSearch;
         String tempMsgIfFail = msgIfFail;
@@ -328,26 +384,24 @@ public class SC {
                     msgIfFail = tempMsgIfFail;
                     SC.eraseBookList(sameSearchBooks);
                     userInput = SC.scanner.nextLine();
+                    if( userInput.equals("9")){return null;}
                     for (int i = 0; i < listToReturnFrom.size(); i++) {
                         if (listToReturnFrom.get(i).getTitle().toLowerCase().contains(userInput.toLowerCase()) ||
                                 listToReturnFrom.get(i).getAuthor().toLowerCase().contains(userInput.toLowerCase())) {
                             sameSearchBooks.add(listToReturnFrom.get(i));
                         }
                     }
-                    if(sameSearchBooks.size()>0){
+                    if(sameSearchBooks.size()>1){
                         msgIfFail = tempMsgRefineSearch;
                         Program.getBookProgram().showAvailableBookListWithRandomInformation(sameSearchBooks, false, true, true, false, false, "Listan är tom tyvärr :(");
                     }
                     if (sameSearchBooks.size() == 1) {
-                        if( sameSearchBooks.get(0).isAvailability() == true ){
-<<<<<<< Updated upstream
-                        sameSearchBooks.get(0).setAvailability(false);
-=======
+                        /*if( sameSearchBooks.get(0).isAvailability() == true ){
                             sameSearchBooks.get(0).setAvailability(false);
->>>>>>> Stashed changes
                         } else {
-                            sameSearchBooks.get(0).setAvailability(false);
-                        }
+                            sameSearchBooks.get(0).setAvailability(true);
+                        }*/
+                        SC.messageFieldCenterWithBlankSpace( "Sökresultat: " +sameSearchBooks.get(0).getTitle());
                         return sameSearchBooks.get(0);
                     }
                     SC.messageFieldCenterWithBlankSpace( msgIfFail);
@@ -358,8 +412,6 @@ public class SC {
         return null;
     }
 
-<<<<<<< Updated upstream
-=======
     public static void eraseBookList(ArrayList<Book> bookListToEmpty) {
         if (bookListToEmpty.size() > 0) {
             do {
@@ -369,7 +421,6 @@ public class SC {
         }
     }
 
->>>>>>> Stashed changes
     public static Book advancedSearchInList(ArrayList<Book> bookListToRemoveFrom, String msgWelcome, String msgRefineSearch, String msgIfFail, String msgIfEmptyList) {
         String tempMsgRefineSearch = msgRefineSearch;
         String tempMsgIfFail = msgIfFail;
@@ -382,11 +433,7 @@ public class SC {
             do {
                 do {
                     msgIfFail = tempMsgIfFail;
-<<<<<<< Updated upstream
-                    SC.eraseBookList(sameSearchBooks);
-=======
                     eraseList(sameSearchBooks);
->>>>>>> Stashed changes
                     userInput = SC.scanner.nextLine();
                     for (int i = 0; i < bookListToRemoveFrom.size(); i++) {
                         if (bookListToRemoveFrom.get(i).getTitle().toLowerCase().contains(userInput.toLowerCase()) ||
@@ -410,11 +457,7 @@ public class SC {
         return null;
     }
 
-<<<<<<< Updated upstream
-    public static void eraseBookList(ArrayList<Book> bookListToEmpty) {
-=======
     public static void eraseList(ArrayList<Book> bookListToEmpty) {
->>>>>>> Stashed changes
         if (bookListToEmpty.size() > 0) {
             do {
                 bookListToEmpty.remove(bookListToEmpty.get(0));
