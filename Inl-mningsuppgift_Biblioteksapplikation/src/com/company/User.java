@@ -13,12 +13,20 @@ public abstract class User implements Serializable {
         this.password = password;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
     public void addBook(Book book) {
         if (book instanceof Book) {
             books.add(book);
-        } else {
             return;
         }
+        return;
     }
 
     public void removeBook(Book book) {
@@ -27,13 +35,5 @@ public abstract class User implements Serializable {
 
     public ArrayList<Book> getBooks() {
         return books;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getName() {
-        return name;
     }
 }

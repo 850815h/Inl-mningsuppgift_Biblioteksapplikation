@@ -8,7 +8,6 @@ public class Book implements Serializable {
     private String author;
     private String information;
     private boolean availability;
-    private boolean isDeletedFromLibrarianSystem = false;
     private LocalDate returnDate = LocalDate.now();
 
     public Book( String title, String author, String information, boolean availability) {
@@ -18,8 +17,6 @@ public class Book implements Serializable {
         this.availability = availability;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
     public void setReturnDate(LocalDate dateToReturnBook){
         returnDate = dateToReturnBook;
     }
@@ -27,6 +24,8 @@ public class Book implements Serializable {
     public LocalDate getReturnDate(){
         return returnDate;
     }
+
+
 
     public String getTitle() {
         return title;
@@ -38,14 +37,6 @@ public class Book implements Serializable {
 
     public String getInformation() {
         return information;
-    }
-
-    public boolean getIsDeletedFromLibrarianSystem(){
-        return isDeletedFromLibrarianSystem;
-    }
-
-    public void deletePermanentlyFromLibrary(){
-        isDeletedFromLibrarianSystem = true;
     }
 
     public boolean isAvailability() {

@@ -1,0 +1,19 @@
+Kunder:
+Användarnamn / lösen
+
+Conny		conny123
+Johnny		johnny123
+Kajsa Anka	kajsaannka123
+Mimmi Pigg	mimmipigg123
+Ponny		ponny123
+Ronny		ronny123
+saja90		sajsaj
+Sanna		sajsaj
+Sonny		sonny123
+
+
+Bibliotekarie:
+Användarnamn / lösen
+
+Johan		johan123
+Hassan		hassan123
